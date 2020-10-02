@@ -1,5 +1,7 @@
 const mdLinks = require('../');
+const fs = require('fs');
 
+fs.
 
 describe('mdLinks', () => {
 
