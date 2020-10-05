@@ -1,7 +1,7 @@
 const mdLinks = require('../');
 const fs = require('fs');
 
-fs.
+let archivos= fs.readdirSync('./')
 
 describe('mdLinks', () => {
 
