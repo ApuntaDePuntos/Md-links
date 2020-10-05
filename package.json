@@ -1,0 +1,28 @@
+{
+  "name": "md-links",
+  "version": "1.0.0",
+  "description": "Este es mi paquete para validar links ( es el primero que hago) ",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApuntaDePuntos/Md-links.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "validate",
+    "js"
+  ],
+  "author": "Natalia Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ApuntaDePuntos/Md-links/issues"
+  },
+  "homepage": "https://github.com/ApuntaDePuntos/Md-links#readme"
+}
