@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/ApuntaDePuntos/Md-links#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "jsdom": "^16.4.0",
     "markdown-it": "^11.0.1"
   }

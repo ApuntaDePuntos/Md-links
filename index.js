@@ -9,10 +9,10 @@ const fs = require('fs');
 const path = require('path');
 let MarkdownIt = require('markdown-it');
 const fsPromises = require('fs').promises;
+const axios = require('axios').default;
 //path.resolve([...paths]);
 
 // Leer los archivos // Retornar una promesas 
-
 function toReadFile(file_path) {
   let textosArchivos = new Promise((resolve, reject) => {
     fs.readFile(file_path, "utf8", (err, data) => {
@@ -22,9 +22,9 @@ function toReadFile(file_path) {
   })
   return textosArchivos
 };
+
 // Estraer los datos al tener el DOM creado JSDOM 
-function extractData(textoenHTML) {
-  // me falta traer path como parametro 
+function extractData(textoenHTML, path ) {
   let dom = new JSDOM(textoenHTML);
   const document = dom.window.document;
   let links = document.querySelectorAll("a");
@@ -33,19 +33,23 @@ function extractData(textoenHTML) {
     if (!contenedorInfo.includes(objetos.href)) { let objeto = new Object();
       objeto.Url = objetos.href;
       objeto.text = objetos.textContent;
-      // agregar path como propiedad 
+      objeto.file = path;
       contenedorInfo.push(objeto) }
-    //contenedorInfo += objetos.textContent , objetos.href })
   })
   return contenedorInfo 
 }
-// pasar de formato MD a HTML 
 
+// pasar de formato MD a HTML 
 function volverHTML(textolargo) {
   md = new MarkdownIt();
   let result = md.render(textolargo);
   return result
 };
+
+
+
+
+
 
 let archivos = fs.readdirSync('./')
 console.log(archivos)
@@ -63,7 +67,7 @@ fs.readdir('./', function (error, files) {
         toReadFile(filePath)
           .then((textos) => {
             const htmlGigante = volverHTML(textos);
-            const arrayObjetos = extractData(htmlGigante)
+            const arrayObjetos = extractData(htmlGigante , filePath )
             console.log (arrayObjetos)
           })
             .catch(
@@ -91,5 +95,39 @@ const mdLinks = (path, options = 0) => {
   return contenedor
 }
 
+const prueba = [  {
+  Url: 'https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback',
+  text: 'Leer un archivo'
+},
+{
+  Url: 'https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback',
+  text: 'Leer un directorio'
+},
+{ Url: 'https://nodejs.org/api/path.html', text: 'Path' },
+{
+  Url: 'https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e',
+  text: 'Linea de comando CLI'
+},
+{
+  Url: 'https://medium.com/esteEsMIerror',
+  text: 'Esta Es mi Error'
+}
+]
 
-
+function validateLinks ( acaVaPrueba ) { 
+  acaVaPrueba.forEach(objeto => {
+    console.log(objeto.Url)
+      axios.get( objeto.Url )
+      .then(function (response) {
+      if ( response.status = 200 ) {       
+        console.log( objeto.Url  + ' // ok // '  + response.status +'// '+ objeto.text) 
+        }
+        else { console.log( objeto.Url  + ' // fail// ' + response.status + objeto.text)}
+  }) 
+ // }
+   .catch(function (error) {
+ throw ( error);
+ })
+})
+}
+validateLinks(prueba)
