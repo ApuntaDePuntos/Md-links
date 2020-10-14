@@ -11,54 +11,15 @@ let MarkdownIt = require('markdown-it');
 const fsPromises = require('fs').promises;
 const axios = require('axios').default;
 const extraerLinks = require('./extraerLinks');
+const validateLinks = require('./validateLinks.js')
 const { resolve } = require('path');
 //path.resolve([...paths]);
 
 
-// Validar los links 
-function validateLinks(acaVaPrueba) {
-
-  let arrayValidados = acaVaPrueba.map((objeto) => {
-      return axios.get(objeto.Url)
-          .then(
-              function (response) {
-                  if (response.status = 200) {
-                      let newArray = new Object();
-                      newArray.Url = objeto.Url;
-                      newArray.text = objeto.text;
-                      newArray.file = objeto.file;
-                      newArray.status = response.status;
-                      newArray.ok = 'ok';
-                      return newArray
-                  }
-                  else {
-                      let newArray = new Object();
-                      newArray.Url = objeto.Url;
-                      newArray.text = objeto.text;
-                      newArray.file = objeto.file;
-                      newArray.status = response.status;
-                      newArray.fail = 'fail'
-                      return newArray
-                  }
-              })
-              .catch(function (error) {
-                let newArray = new Object();
-                      newArray.Url = objeto.Url;
-                      newArray.text = objeto.text;
-                      newArray.file = objeto.file;
-                      newArray.status = 503;
-                      newArray.fail = 'fail'
-                      return newArray
-                      //console.log(error.message)
-                      })
-  })
-return Promise.all(arrayValidados)
-  
-}
-
 // Crear una funcion que reciba dos parametros:
 // Parametro uno:  string & segundo OPCIONAL : obj booleano validate 
 const mdLinks = (router, options = 0) => { 
+  let promesaMdLinks = new Promise((resolve, reject) => {  
   extraerLinks(router)
   .then((values) => {
     if (options === true) { 
@@ -67,6 +28,9 @@ const mdLinks = (router, options = 0) => {
             else { resolve(values) }
             } 
   )
+  })
+  console.log(promesaMdLinks)
+  return promesaMdLinks
 }; 
 
 mdLinks('./')
