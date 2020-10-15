@@ -8,32 +8,49 @@ const process = require('process');
 let router = process.argv[2]
 let options = process.argv[3]
 
+//preguntar si debo validar ? si se valida con o sin stats
+//debo devolver estadisticas? 
+(router , options) => {
+if (options === false) {
+    mdLinks(router)
+    .then(console.log)}
+if (options === true) {
+    if (options == '--validate'){
+        mdLinks(router, true)
+        .then(console.log)}
+    if (options == '--stats'){
+        metrics(result)
+        .then(console.log) }
+    if (options == '--stats --validate'){
+        metrics(result)
+        .then(console.log) }
+    else { console.log('Sorry, that option is not valid');
+    console.log( 'you can use --validate , --stats , --stats --validate')}
+}
+}
+
+
 mdLinks(router)
     .then((result) => {
-        console.log(result)
+        console.log(options)
         switch (options) {
             case '--validate':
-                return validateLinks(result)
+                mdLinks(router, true)
+                .then(console.log)
                 break;
             case '--stats':
-                return metrics(result)
+                metrics(result)
+                .then(console.log)
                 break;
             case '--stats --validate':
-                return metrics(result)
+                metrics(result)
+                .then(console.log)
                 break;
             default:
                 console.log('Sorry, that option is not valid');
+                console.log( 'you can use --validate , --stats , --stats --validate');
         }
-    }) // cierre .then 
-
-
-
-        // if (options == '--validate') { return validateLinks(result) }
-        // if (options == '--stats ') { return metrics(result) }
-        // if (options == '--stats --validate') {console.log(result) }
-
-    
-
+    }) 
 
 
   // Leer argumentos parte de cli crear una funcion para cli que llame mdlinks validate y stats 

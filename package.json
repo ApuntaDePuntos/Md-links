@@ -21,7 +21,7 @@
   ],
   "author": "Natalia Rodriguez",
   "license": "ISC",
-  "bin":{
+  "bin": {
     "mdLinks": "./cli.js"
   },
   "bugs": {
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/ApuntaDePuntos/Md-links#readme",
   "dependencies": {
     "axios": "^0.20.0",
+    "jest": "^26.5.3",
     "jsdom": "^16.4.0",
     "markdown-it": "^11.0.1"
   }

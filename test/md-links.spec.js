@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 const mdLinks = require('../index');
 const extraerLinks = require('../extraerLinks.js');
 const validateLinks = require('../validateLinks.js')
@@ -5,15 +9,7 @@ const metrics = require('../metrics.js');
 
 const fs = require('fs');
 
-let archivos= fs.readdirSync('./')
 
-describe('mdLinks', () => {
-
-  it('should...', () => {
-    console.log('FIX ME!');
-  });
-
-});
 
 const prueba = [{
   Url: 'https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback',
@@ -35,7 +31,7 @@ const prueba = [{
   Url: 'https://medium.com/esteEsMIerror',
   file: 'mdPrueba.md',
   text: 'Esta Es mi Error'
-  }
+}
 ]
 
 const resultValidate = [
@@ -77,7 +73,9 @@ const resultValidate = [
 ]
 
 const metricResult = { Total: 5, Broken: 1, Unique: 5 }
+
 const path = './mdprueba.md'
+
 const resultExtracLinks = [{
   Url: 'https://github.com/markdown-it/markdown-it',
   text: 'markdown-it',
@@ -116,11 +114,14 @@ describe(' This function validates the status of an array of links', () => {
   it('is a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-
+  // este debo hacerlo asincrono 
   it('returns new array with two new keys, status and ok/fail options', () => {
-    expect(validateLinks(prueba,'this array contain 4 links ok and 1 fail')).toEqual(resultValidate);
+    return validateLinks(prueba).then(result => {
+      expect(result).toEqual(resultValidate);
+    })
   });
 });
+
 
 // test metrics Function 
 
@@ -130,7 +131,7 @@ describe(' This function returns statistics from an array', () => {
   });
 
   it('returns new array with two new keys, status and ok/fail options', () => {
-    expect(metrics(resultValidate,'validated array')).toEqual(metricResult);
+    expect(metrics(resultValidate, 'validated array')).toEqual(metricResult);
   });
 });
 
@@ -142,7 +143,9 @@ describe(' This function extracts the links from a file', () => {
   });
 
   it('Returns an array of objects with the links that found in .md files', () => {
-    expect(extraerLinks(path,' URL Text File')).toEqual(resultExtracLinks);
+    return extraerLinks(path).then(result => { console.log(result)
+      expect(result).toEqual(resultExtracLinks);
+    })
   });
 });
 
