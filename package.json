@@ -21,6 +21,9 @@
   ],
   "author": "Natalia Rodriguez",
   "license": "ISC",
+  "bin":{
+    "mdLinks": "./cli.js"
+  },
   "bugs": {
     "url": "https://github.com/ApuntaDePuntos/Md-links/issues"
   },

@@ -82,6 +82,4 @@ function extraerLinks(router) {
 }
 
 
-
-
 module.exports =  extraerLinks
