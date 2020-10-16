@@ -8,6 +8,7 @@ const fsPromises = require('fs').promises;
 const axios = require('axios').default;
 
 
+
 // Leer los archivos // Retornar una promesas 
 function toReadFile(file_path) {
     let textosArchivos = new Promise((resolve, reject) => {
@@ -18,6 +19,7 @@ function toReadFile(file_path) {
     })
     return textosArchivos
 };
+
 
 // Estraer los datos al tener el DOM creado JSDOM 
 function extractData(textoenHTML, path) {
@@ -83,3 +85,6 @@ function extraerLinks(router) {
 
 
 module.exports =  extraerLinks
+
+extraerLinks('/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba')
+.then(console.log)

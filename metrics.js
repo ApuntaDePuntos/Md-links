@@ -15,7 +15,7 @@ function metrics(arrayPrueba , options) {
     finalResult.Unique = uniqueLinks.length
     return finalResult
     }
-    if (options === '--stats --validate')
+    if (options === '--stats--validate')
     {
     let finalResult = new Object();// hey esto es de la CLI 
     finalResult.Total = arrayPrueba.length,

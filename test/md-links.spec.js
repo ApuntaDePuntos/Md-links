@@ -2,15 +2,15 @@
  * @jest-environment node
  */
 
-const mdLinks = require('../index');
+const mdLinks = require('../index.js')
 const extraerLinks = require('../extraerLinks.js');
 const validateLinks = require('../validateLinks.js')
 const metrics = require('../metrics.js');
 
 const fs = require('fs');
-
-
-
+const option1 = '--validate'
+const option2 = '--stats'
+const option3 = '--stats--validate'
 const prueba = [{
   Url: 'https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback',
   file: 'mdPrueba.md',
@@ -74,38 +74,69 @@ const resultValidate = [
 
 const metricResult = { Total: 5, Broken: 1, Unique: 5 }
 
-const path = './mdprueba.md'
+const path = '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba'
 
-const resultExtracLinks = [{
-  Url: 'https://github.com/markdown-it/markdown-it',
-  text: 'markdown-it',
-  file: 'mdPrueba.md'
-},
-{
-  Url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions',
-  text: 'expresiones regulares (RegExp)',
-  file: 'mdPrueba.md'
-},
-{
-  Url: 'https://github.com/markedjs/marked',
-  text: 'marked',
-  file: 'mdPrueba.md'
-},
-{
-  Url: 'https://github.com/jsdom/jsdom',
-  text: 'JSDOM',
-  file: 'mdPrueba.md'
-},
-{
-  Url: 'https://github.com/cheeriojs/cheerio',
-  text: 'Cheerio',
-  file: 'mdPrueba.md'
-},
-{
-  Url: 'https://github.com/markedjs/marked',
-  text: 'marked',
-  file: 'mdPrueba.md'
-}
+const resultExtracLinks = [
+  {
+    Url: 'https://github.com/markdown-it/markdown-it',
+    text: 'markdown-it',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions',
+    text: 'expresiones regulares (RegExp)',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://github.com/markedjs/marked',
+    text: 'marked',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://github.com/jsdom/jsdom',
+    text: 'JSDOM',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://github.com/cheeriojs/cheerio',
+    text: 'Cheerio',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://github.com/markedjs/marked',
+    text: 'marked',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba copy.md'
+  },
+  {
+    Url: 'https://github.com/markdown-it/markdown-it',
+    text: 'markdown-it',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  },
+  {
+    Url: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions',
+    text: 'expresiones regulares (RegExp)',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  },
+  {
+    Url: 'https://github.com/markedjs/marked',
+    text: 'marked',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  },
+  {
+    Url: 'https://github.com/jsdom/jsdom',
+    text: 'JSDOM',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  },
+  {
+    Url: 'https://github.com/cheeriojs/cheerio',
+    text: 'Cheerio',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  },
+  {
+    Url: 'https://github.com/markedjs/marked',
+    text: 'marked',
+    file: '/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba/mdPrueba.md'
+  }
 ]
 
 // test Validate Function 
@@ -115,7 +146,7 @@ describe(' This function validates the status of an array of links', () => {
     expect(typeof validateLinks).toBe('function');
   });
   it('returns new array with two new keys, status and ok/fail options', () => {
-    return validateLinks(prueba).then(result => {
+    return validateLinks(prueba, option1).then(result => {
       expect(result).toEqual(resultValidate);
     })
   });
@@ -130,7 +161,7 @@ describe(' This function returns statistics from an array', () => {
   });
 
   it('returns new array with two new keys, status and ok/fail options', () => {
-    expect(metrics(resultValidate, 'validated array')).toEqual(metricResult);
+    expect(metrics(resultValidate, option3)).toEqual(metricResult);
   });
 });
 
@@ -140,7 +171,7 @@ describe(' This function extracts the links from a file', () => {
   it('is a function', () => {
     expect(typeof extraerLinks).toBe('function');
   });
-
+// esta esta ligada a toReadFiles que devuelve texto en HTML por eso no funciona 
   it('Returns an array of objects with the links that found in .md files', () => {
     return extraerLinks(path).then(result => { console.log(result)
       expect(result).toEqual(resultExtracLinks);
