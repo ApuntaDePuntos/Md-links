@@ -114,7 +114,6 @@ describe(' This function validates the status of an array of links', () => {
   it('is a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  // este debo hacerlo asincrono 
   it('returns new array with two new keys, status and ok/fail options', () => {
     return validateLinks(prueba).then(result => {
       expect(result).toEqual(resultValidate);
