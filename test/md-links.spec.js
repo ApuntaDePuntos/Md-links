@@ -7,10 +7,15 @@ const extraerLinks = require('../extraerLinks.js');
 const validateLinks = require('../validateLinks.js')
 const metrics = require('../metrics.js');
 
+const axios = require('axios');
+jest.mock('axios');
 const fs = require('fs');
+jest.mock('fs');
+
 const option1 = '--validate'
 const option2 = '--stats'
 const option3 = '--stats--validate'
+
 const prueba = [{
   Url: 'https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback',
   file: 'mdPrueba.md',
@@ -173,10 +178,40 @@ describe(' This function extracts the links from a file', () => {
   });
 // esta esta ligada a toReadFiles que devuelve texto en HTML por eso no funciona 
   it('Returns an array of objects with the links that found in .md files', () => {
-    return extraerLinks(path).then(result => { console.log(result)
+    return extraerLinks(path).then(result => {
       expect(result).toEqual(resultExtracLinks);
     })
   });
 });
 
-// test mdLinks Function 
+// mock
+
+it('returns the arrays of links', async () => {
+  axios.get.mockResolvedValue({
+    data: [{
+      Url: 'https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback',
+      file: 'mdPrueba.md',
+      text: 'Leer un archivo'
+    },
+    {
+      Url: 'https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback',
+      file: 'mdPrueba.md',
+      text: 'Leer un directorio'
+    },
+    { Url: 'https://nodejs.org/api/path.html', file: 'mdPrueba.md', text: 'Path' },
+    {
+      Url: 'https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e',
+      file: 'mdPrueba.md',
+      text: 'Linea de comando CLI'
+    },
+    {
+      Url: 'https://medium.com/esteEsMIerror',
+      file: 'mdPrueba.md',
+      text: 'Esta Es mi Error'
+    }
+    ]
+  });
+
+  const result = await validateLinks(prueba);
+  expect(result).toEqual(resultValidate);
+});

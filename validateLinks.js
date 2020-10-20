@@ -22,7 +22,7 @@ function validateLinks(acaVaPrueba) {
                         newArray.text = objeto.text;
                         newArray.file = objeto.file;
                         newArray.status = response.status;
-                        newArray.ok = 'ok';
+                        newArray.okfail = 'ok';
                         return newArray
                     }
                     else {
@@ -31,7 +31,7 @@ function validateLinks(acaVaPrueba) {
                         newArray.text = objeto.text;
                         newArray.file = objeto.file;
                         newArray.status = response.status;
-                        newArray.fail = 'fail'
+                        newArray.okfail = 'fail'
                         return newArray
                     }
                 })
@@ -41,7 +41,7 @@ function validateLinks(acaVaPrueba) {
                 newArray.text = objeto.text;
                 newArray.file = objeto.file;
                 newArray.status = 503;
-                newArray.fail = 'fail'
+                newArray.okfail = 'fail'
                 return newArray
                 //console.log(error.message)
             })

@@ -5,7 +5,7 @@ const path = require('path');
 let MarkdownIt = require('markdown-it');
 const { resolve } = require('path');
 const fsPromises = require('fs').promises;
-const axios = require('axios').default;
+
 
 
 
@@ -86,5 +86,3 @@ function extraerLinks(router) {
 
 module.exports =  extraerLinks
 
-extraerLinks('/Users/nataliarodriguez/Documents/Laboratoria/Md-links/prueba')
-.then(console.log)

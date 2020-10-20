@@ -1,5 +1,5 @@
 #! / usr / bin / env nodo
-//chmod + x cli.js           // Hacer ejecutable el archivo
+//chmod + x cli.js 
 const mdLinks = require('./index');
 const metrics = require('./metrics');
 const validateLinks = require('./validateLinks');
@@ -19,7 +19,6 @@ if (options.trim() === 0) {
     if (options == '--stats' || '--stats--validate'){
         mdLinks(router, options)
         .then((result)=> {
-            console.log(result)
             let metric = metrics(result , options)
             console.log(metric)
             return metric
